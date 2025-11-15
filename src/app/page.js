@@ -1,3 +1,5 @@
+import AuthSection from "@/sections/auth-section/AuthSection";
+
 export default function page() {
-  return <div>Hello world</div>;
+  return <AuthSection />;
 }
