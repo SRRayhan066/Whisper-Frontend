@@ -9,3 +9,7 @@ const Api = {
 export const signUpApi = (payload) => {
   return Api.POST("/api/auth/sign-up", payload);
 };
+
+export const signInApi = (payload) => {
+  return Api.POST("/api/auth/sign-in", payload);
+};

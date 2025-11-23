@@ -1,5 +1,6 @@
 import { HttpStatusCode } from "../constants/HttpStatusCode";
 import { Message } from "../constants/Message";
+import { getAuthToken } from "../utils/auth";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3007";
@@ -10,9 +11,17 @@ export const resolveResponse = async (apiRoute) => {
 
     const fullUrl = url.startsWith("http") ? url : `${API_BASE_URL}${url}`;
 
+    const headers = { "Content-Type": "application/json" };
+
+    // Add auth token if available
+    const token = getAuthToken();
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     const options = {
       method,
-      headers: { "Content-Type": "application/json" },
+      headers,
       credentials: "include",
     };
 
