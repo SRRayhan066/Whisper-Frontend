@@ -6,6 +6,7 @@ import {
 } from "@/lib/wrapper/ResolveResponse";
 import { signUpApi } from "@/lib/constants/ApiRoutes";
 import { Message } from "@/lib/constants/Message";
+import { ToastType } from "@/lib/enum/ToastType";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/contexts/ToastContext";
 
@@ -29,11 +30,14 @@ export default function useSignUpForm({ onToggle }) {
     const response = await resolveResponse(signUpApi(data));
 
     if (isErrorResponse(response)) {
-      showToast(`${Message.SIGN_UP_FAILED}: ${response.error}`, "error");
+      showToast(
+        `${Message.SIGN_UP_FAILED}: ${response.error}`,
+        ToastType.ERROR
+      );
       return;
     }
 
-    showToast(Message.SIGN_UP_SUCCESS, "success");
+    showToast(Message.SIGN_UP_SUCCESS, ToastType.SUCCESS);
     onToggle();
   };
 

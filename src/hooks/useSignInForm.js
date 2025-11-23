@@ -6,6 +6,7 @@ import {
 } from "@/lib/wrapper/ResolveResponse";
 import { signInApi } from "@/lib/constants/ApiRoutes";
 import { Message } from "@/lib/constants/Message";
+import { ToastType } from "@/lib/enum/ToastType";
 import { AppRoute } from "@/lib/constants/AppRoute";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -33,7 +34,10 @@ export default function useSignInForm() {
     const response = await resolveResponse(signInApi(data));
 
     if (isErrorResponse(response)) {
-      showToast(`${Message.SIGN_IN_FAILED}: ${response.error}`, "error");
+      showToast(
+        `${Message.SIGN_IN_FAILED}: ${response.error}`,
+        ToastType.ERROR
+      );
       return;
     }
 
@@ -41,7 +45,7 @@ export default function useSignInForm() {
       dispatch(setToken(response.data.accessToken));
     }
 
-    showToast(Message.SIGN_IN_SUCCESS, "success");
+    showToast(Message.SIGN_IN_SUCCESS, ToastType.SUCCESS);
 
     router.push(AppRoute.CHAT);
   };

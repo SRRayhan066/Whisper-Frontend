@@ -4,6 +4,7 @@ import {
 } from "@/lib/wrapper/ResolveResponse";
 import { signOutApi } from "@/lib/constants/ApiRoutes";
 import { Message } from "@/lib/constants/Message";
+import { ToastType } from "@/lib/enum/ToastType";
 import { AppRoute } from "@/lib/constants/AppRoute";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,14 +24,17 @@ export default function useChatSection() {
     const response = await resolveResponse(signOutApi());
 
     if (isErrorResponse(response)) {
-      showToast(`${Message.SIGN_OUT_FAILED}: ${response.error}`, "error");
+      showToast(
+        `${Message.SIGN_OUT_FAILED}: ${response.error}`,
+        ToastType.ERROR
+      );
       setIsLoggingOut(false);
       return;
     }
 
     dispatch(clearToken());
 
-    showToast(Message.SIGN_OUT_SUCCESS, "success");
+    showToast(Message.SIGN_OUT_SUCCESS, ToastType.SUCCESS);
 
     router.push(AppRoute.ROOT);
   };
