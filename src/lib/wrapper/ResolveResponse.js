@@ -1,6 +1,7 @@
 import { HttpStatusCode } from "../constants/HttpStatusCode";
 import { Message } from "../constants/Message";
-import { getAuthToken } from "../utils/auth";
+import store from "@/store/store";
+import { selectAccessToken } from "@/store/slices/authSlice";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3007";
@@ -13,8 +14,9 @@ export const resolveResponse = async (apiRoute) => {
 
     const headers = { "Content-Type": "application/json" };
 
-    // Add auth token if available
-    const token = getAuthToken();
+    // Get token from Redux store
+    const state = store.getState();
+    const token = selectAccessToken(state);
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }

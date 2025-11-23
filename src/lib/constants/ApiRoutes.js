@@ -17,3 +17,7 @@ export const signInApi = (payload) => {
 export const signOutApi = () => {
   return Api.POST("/api/auth/sign-out");
 };
+
+export const getNewToken = () => {
+  return Api.GET("/api/auth/refresh-token");
+};

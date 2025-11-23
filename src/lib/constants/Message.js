@@ -8,7 +8,7 @@ export const Message = {
   SIGN_IN_FAILED: "Login failed",
 
   // Sign Out Messages
-  SIGN_OUT_SUCCESS: "Logged out successfully!",
+  SIGN_OUT_SUCCESS: "Logged out successful!",
   SIGN_OUT_FAILED: "Logout failed",
 
   // General Error Messages

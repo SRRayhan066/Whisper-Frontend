@@ -6,13 +6,17 @@ import {
 } from "@/lib/wrapper/ResolveResponse";
 import { signInApi } from "@/lib/constants/ApiRoutes";
 import { Message } from "@/lib/constants/Message";
-import { setAuthToken } from "@/lib/utils/auth";
 import { AppRoute } from "@/lib/constants/AppRoute";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setToken } from "@/store/slices/authSlice";
+import { useToast } from "@/contexts/ToastContext";
 
 export default function useSignInForm() {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { showToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -29,17 +33,15 @@ export default function useSignInForm() {
     const response = await resolveResponse(signInApi(data));
 
     if (isErrorResponse(response)) {
-      alert(`${Message.SIGN_IN_FAILED}: ${response.error}`);
-      console.error("Sign in error:", response.error);
+      showToast(`${Message.SIGN_IN_FAILED}: ${response.error}`, "error");
       return;
     }
 
-    if (response.data?.token) {
-      setAuthToken(response.data.token);
+    if (response.data?.accessToken) {
+      dispatch(setToken(response.data.accessToken));
     }
 
-    alert(Message.SIGN_IN_SUCCESS);
-    console.log("Sign in success:", response.data);
+    showToast(Message.SIGN_IN_SUCCESS, "success");
 
     router.push(AppRoute.CHAT);
   };

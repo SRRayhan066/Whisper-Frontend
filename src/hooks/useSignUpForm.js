@@ -7,8 +7,10 @@ import {
 import { signUpApi } from "@/lib/constants/ApiRoutes";
 import { Message } from "@/lib/constants/Message";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/contexts/ToastContext";
 
 export default function useSignUpForm({ onToggle }) {
+  const { showToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -27,13 +29,11 @@ export default function useSignUpForm({ onToggle }) {
     const response = await resolveResponse(signUpApi(data));
 
     if (isErrorResponse(response)) {
-      alert(`${Message.SIGN_UP_FAILED}: ${response.error}`);
-      console.error("Sign up error:", response.error);
+      showToast(`${Message.SIGN_UP_FAILED}: ${response.error}`, "error");
       return;
     }
 
-    alert(Message.SIGN_UP_SUCCESS);
-    console.log("Sign up success:", response.data);
+    showToast(Message.SIGN_UP_SUCCESS, "success");
     onToggle();
   };
 
