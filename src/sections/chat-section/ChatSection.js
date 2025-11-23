@@ -1,12 +1,12 @@
 "use client";
 
-
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/ui/button/Button";
 import ChatItem from "@/components/chat-item/ChatItem";
 import Input from "@/components/ui/input/Input";
 import ChatMessage from "@/components/chat-message/ChatMessage";
+import useChatSection from "@/hooks/useChatSection";
 
 const chats = [
   { id: 1, userName: "John Doe", message: "Hey, how are you?" },
@@ -32,11 +32,19 @@ const messages = [
 export default function ChatSection() {
   const searchParams = useSearchParams();
   const chatId = searchParams.get("id");
+  const { handleSignOut, isLoggingOut } = useChatSection();
 
   return (
     <div className="w-full h-screen flex flex-col bg-neutral-900 text-white">
       <div className="flex justify-end py-1 px-2 border-b border-b-neutral-600">
-        <Button className="bg-red-500">Log Out</Button>
+        <Button
+          className="bg-red-500"
+          onClick={handleSignOut}
+          loading={isLoggingOut}
+          disabled={isLoggingOut}
+        >
+          Log Out
+        </Button>
       </div>
       <div className="h-full flex">
         <div className="w-80 h-full border-r border-r-neutral-600 flex flex-col">
@@ -79,4 +87,3 @@ export default function ChatSection() {
     </div>
   );
 }
-

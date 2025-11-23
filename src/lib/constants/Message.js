@@ -7,6 +7,10 @@ export const Message = {
   SIGN_IN_SUCCESS: "Login successful!",
   SIGN_IN_FAILED: "Login failed",
 
+  // Sign Out Messages
+  SIGN_OUT_SUCCESS: "Logged out successfully!",
+  SIGN_OUT_FAILED: "Logout failed",
+
   // General Error Messages
   UNEXPECTED_ERROR: "An unexpected error occurred. Please try again.",
   NETWORK_ERROR: "Network error. Please check your connection.",

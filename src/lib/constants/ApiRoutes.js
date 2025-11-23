@@ -13,3 +13,7 @@ export const signUpApi = (payload) => {
 export const signInApi = (payload) => {
   return Api.POST("/api/auth/sign-in", payload);
 };
+
+export const signOutApi = () => {
+  return Api.POST("/api/auth/sign-out");
+};
